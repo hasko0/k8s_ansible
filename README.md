@@ -21,6 +21,7 @@ Before running the playbooks, ensure you have:
 ---
 
 ## **🔦 Architecture**  
+- **Controller Node:** `192.168.100.215` 
 - **Master Node:** `192.168.100.200`  
 - **Worker Nodes:**  
   - `192.168.100.201` (node01)  
@@ -30,8 +31,8 @@ Before running the playbooks, ensure you have:
 | Playbook | Description |  
 |----------|------------|  
 | `prerequisites.yml` | Installs dependencies, sets up kernel modules |  
-| `kube-deploy.yml` | Installs `kubeadm`, `kubelet`, `kubectl` |  
-| `calico.yml` | Deploys **Calico CNI** for networking |  
+| `kube-deploy.yml` | Installs `kubeadm`, `kubelet`, `kubectl`, Deploys **Calico CNI** for networking|  
+| `update_hosts.yml` | Add ips and hostname between the VMS |  
 
 ---
 
@@ -39,8 +40,8 @@ Before running the playbooks, ensure you have:
 
 ### **1️⃣ Clone the Repository**  
 ```bash
-git clone https://github.com/your-repo/kubernetes-ansible.git
-cd kubernetes-ansible
+git clone https://github.com/your-repo/k8s_ansible.git
+cd k8s_ansible
 ```
 
 ### **2️⃣ Update the Inventory File**  
@@ -55,6 +56,12 @@ Edit `inventory.ini` with your server IPs:
 ```
 
 ### **3️⃣ Run the Playbooks**  
+
+#### **Update Servers hostname **  
+```bash
+ansible-playbook -i inventory.ini  update_hosts.yml
+```
+
 #### **Install Prerequisites**  
 ```bash
 ansible-playbook -i inventory.ini prerequisites.yml
@@ -65,10 +72,6 @@ ansible-playbook -i inventory.ini prerequisites.yml
 ansible-playbook -i inventory.ini kube-deploy.yml
 ```
 
-#### **Configure Calico Networking**  
-```bash
-ansible-playbook -i inventory.ini calico.yml
-```
 
 ### **4️⃣ Verify Cluster Status**  
 ```bash
@@ -77,9 +80,9 @@ kubectl get nodes
 Expected Output:  
 ```bash
 NAME      STATUS   ROLES           AGE   VERSION
-master01  Ready    control-plane   5m    v1.28.0
-node01    Ready    <none>          4m    v1.28.0
-node02    Ready    <none>          4m    v1.28.0
+master01  Ready    control-plane   5m    v1.29.0
+node01    Ready    <none>          4m    v1.29.0
+node02    Ready    <none>          4m    v1.29.0
 ```
 
 ---
