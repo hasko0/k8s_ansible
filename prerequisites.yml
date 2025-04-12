@@ -43,6 +43,6 @@
         line: "{{ item }}"
         state: present
       with_items:
-        - "192.168.100.200 master01"   #replace this line with your VMs ip and hostname
+        - "192.168.100.200 master01"   #replace this and the below lines with your VMs IP and hostname
         - "192.168.100.201 node01"
         - "192.168.100.202 node02"
